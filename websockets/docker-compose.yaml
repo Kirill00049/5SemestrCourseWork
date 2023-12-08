@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app1
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/market
+      SPRING_DATASOURCE_USERNAME: market
+      SPRING_DATASOURCE_PASSWORD: market
+
+  db:
+    image: postgres
+    container_name: db1
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: market
+      POSTGRES_PASSWORD: market
+
+volumes:
+  db-data:
